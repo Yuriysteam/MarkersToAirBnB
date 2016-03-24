@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Accessing arguments in UI events</title>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+	<style>
+		html,
+		body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+		
+		#map {
+			height: 100%;
+		}
+	</style>
+</head>
+
+<body>
+
+	<button id="pointsconf">Confirm points and go</button>
+	<div id="map"></div>
+
+	<script>
+		var markers = [];
+
+		function initMap() {
+			var map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 4,
+				center: {
+					lat: -25.363882,
+					lng: 131.044922
+				}
+			});
+
+
+
+			map.addListener('click', function (e) {
+				placeMarkerAndPanTo(e.latLng, map);
+			});
+		}
+
+
+		function placeMarkerAndPanTo(latLng, map) {
+			var marker = new google.maps.Marker({
+				position: latLng,
+				map: map
+			});
+
+			markers.push(marker);
+
+
+			var lat = marker.getPosition().lat();
+			var lng = marker.getPosition().lng();
+
+		}
+		
+		document.getElementById("pointsconf").onclick = coordsave;
+
+		function coordsave() {
+			
+
+			for (var i = 0; i < markers.length; i++) {
+				markers[i].getPosition().lat();
+				markers[i].getPosition().lng();
+				console.log(markers[i].getPosition().lat(), markers[i].getPosition().lng());
+			}
+		};
+	</script>
+
+
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9d7en1PRy47r8NAhNCmdtw9XIRlVE-Z8&callback=initMap">
+	</script>
+
+
+</body>
+
+</html>
